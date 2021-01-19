@@ -14,7 +14,7 @@ std::string infix2postfix(std::string infix) {
                 stack.push('(');
                 break;
             case ')':
-                while (stack.get() != '('){
+                while (stack.get() != '(') {
                     result += stack.pop();
                     result += ' ';
                 }
@@ -24,7 +24,8 @@ std::string infix2postfix(std::string infix) {
             case '-':
             case '*':
             case '/':
-                if (stack.isEmpty() || (priority(infix[i])) > priority(stack.get())) {
+                if (stack.isEmpty() ||
+                (priority(infix[i])) > priority(stack.get())) {
                     stack.push(infix[i]);
                 } else {
                     while (priority(infix[i]) <= priority(stack.get())) {
@@ -44,7 +45,7 @@ std::string infix2postfix(std::string infix) {
                 break;
         }
     }
-    if (!stack.isEmpty())
+    if (!stack.isEmpty() && result[result.length()-1] != ' ')
         result += ' ';
     while (!stack.isEmpty()) {
         result += stack.pop();
