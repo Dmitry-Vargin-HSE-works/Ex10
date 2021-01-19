@@ -2,7 +2,8 @@
 #ifndef INCLUDE_MYSTACK_H_
 #define INCLUDE_MYSTACK_H_
 
-#include "iostream"
+#include <iostream>
+#include <string>
 
 template <class T>
 class MyStack{
@@ -10,7 +11,7 @@ class MyStack{
      int max_length;
      int length = 0;
      T *arr;
-     void expandArr(){
+     void expandArr() {
          this->max_length *= 2;
          T *tmp = new T[max_length];
          for (int i = 0; i < this->length; ++i) {
@@ -19,8 +20,9 @@ class MyStack{
          delete[] this->arr;
          this->arr = tmp;
      }
+
  public:
-     explicit MyStack() {
+     MyStack() {
          this->max_length = 2;
          this->arr = new T[this->max_length];
      }

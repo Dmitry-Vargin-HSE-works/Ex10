@@ -53,13 +53,13 @@ std::string infix2postfix(std::string infix) {
     return result.substr(0, result.length()-1);
 }
 
-bool isNumber(char c){
+bool isNumber(char c) {
     if (48 <= c && c <= 57 || c == '.')
         return true;
     return false;
 }
 
-int priority(char op){
+int priority(char op) {
     switch (op) {
         case '(':
             return 0;
