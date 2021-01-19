@@ -71,7 +71,7 @@ class MyStack{
      std::string to_string() const {
          std::string result;
          for (int i = 0; i < this->length; ++i) {
-             result += this->arr[i] + " ";
+             result += "\"" + this->arr[i] + "\" ";
          }
          result[result.length()-1] = '\0';
          return result;
@@ -79,7 +79,7 @@ class MyStack{
 
      void printStack() const {
          std::cout << "Stack:" << std::endl;
-         std::cout << this->to_string();
+         std::cout << '\"' <<this->to_string() << '\"';
          std::cout << "\n\n";
      }
 };

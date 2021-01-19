@@ -4,52 +4,72 @@
 #include <string>
 
 std::string infix2postfix(std::string infix) {
-    MyStack<std::string> out_stack;
-    MyStack<std::string> oper_stack;
-    int tmp_num = -1;
+    std::string result;
+    MyStack<char> stack;
     for (int i = 0; i < infix.length(); ++i) {
-        if (infix[i] == ' ')
-            continue;
-        if (48 <= infix[i] && infix[i] <= 57) {
-            if (tmp_num == -1) {
-                tmp_num = infix[i] - 48;
-            } else {
-                tmp_num = tmp_num * 10 + infix[i] - 48;
-            }
-        } else {
-            if (tmp_num != -1) {
-                out_stack.push(std::to_string(tmp_num));
-                tmp_num = -1;
-            }
-            if (infix[i] == '*' || infix[i] == '/') {
-                oper_stack.push(std::string(1, infix[i]));
-            } else if (infix[i] == '+' || infix[i] == '-') {
-                if (!oper_stack.isEmpty() && oper_stack.get()[0] != '(') {
-                    out_stack.push(oper_stack.pop());
-                    oper_stack.push(std::string(1, infix[i]));
+        switch (infix[i]) {
+            case ' ':
+                break;
+            case '(':
+                stack.push('(');
+                break;
+            case ')':
+                while (stack.get() != '('){
+                    result += stack.pop();
+                    result += ' ';
+                }
+                stack.pop();
+                break;
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+                if (stack.isEmpty() || (priority(infix[i])) > priority(stack.get())) {
+                    stack.push(infix[i]);
                 } else {
-                    oper_stack.push(std::string(1, infix[i]));
+                    while (priority(infix[i]) <= priority(stack.get())) {
+                        result += stack.pop();
+                        result += ' ';
+                    }
+                    stack.push(infix[i]);
                 }
-            } else if (infix[i] == '(') {
-                oper_stack.push("(");
-            } else if (infix[i] == ')') {
-                char tmp = oper_stack.pop()[0];
-                while (tmp != '(') {
-                    out_stack.push(std::string(1, tmp));
-                    tmp = oper_stack.pop()[0];
+                break;
+            default:
+                if (isNumber(infix[i])) {
+                    result += infix[i];
                 }
-            }
+                if (i + 1 < infix.length() && !isNumber(infix[i+1])) {
+                    result += ' ';
+                }
+                break;
         }
-        // std::cout << "Stage " << i << std::endl;
-        // std::cout << "Out_stack:\n" << out_stack.to_string() << std::endl;
-        // std::cout << "Oper_stack:\n" << oper_stack.to_string() << "\n\n";
     }
-    if (tmp_num != -1) {
-        out_stack.push(std::to_string(tmp_num));
+    while (!stack.isEmpty()) {
+        result += stack.pop();
+        result += ' ';
     }
-    tmp_num = oper_stack.getLength();
-    for (int i = 0; i < tmp_num; ++i) {
-        out_stack.push(oper_stack.pop());
+    return result.substr(0, result.length()-1);
+}
+
+bool isNumber(char c){
+    if (48 <= c && c <= 57 || c == '.')
+        return true;
+    return false;
+}
+
+int priority(char op){
+    switch (op) {
+        case '(':
+            return 0;
+        case ')':
+            return 1;
+        case '+':
+        case '-':
+            return 2;
+        case '*':
+        case '/':
+            return 3;
+        default:
+            return -1;
     }
-    return out_stack.to_string();
 }

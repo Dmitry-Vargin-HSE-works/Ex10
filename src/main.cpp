@@ -6,9 +6,13 @@
 #include "MyStack.h"
 
 int main() {
-    std::cout << infix2postfix("2 + 2") << std::endl;
-    std::cout << infix2postfix("2 + 6 * 3 / (4 - 2)") << std::endl;
-    std::cout << infix2postfix("(2 + 8.3) * (6 - 3.2)") << std::endl;
-    std::cout << infix2postfix("(6 * (4 - 2) + 5) * (2.6 + 3 * 7) - 9") << std::endl;
+    std::string s1 = "2 + 6 * 3 / (4 - 2)";
+    std::string s2 = infix2postfix("(2 + 8.3) * (6 - 3.2)");
+    std::cout << "input: " << s1 << std::endl;
+    std::cout << "output: " << s2 << "\n\n";
+    s1 = "(6 * (4 - 2) + 5) * (2.6 + 3 * 7) - 9";
+    s2 = infix2postfix("6 4 2 - * 5 + 2.6 3 7 * + * 9 -");
+    std::cout << "input: " << s1 << std::endl;
+    std::cout << "output: " << s2 << "\n\n";
     return 0;
 }
