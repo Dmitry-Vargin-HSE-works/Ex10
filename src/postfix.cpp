@@ -44,6 +44,8 @@ std::string infix2postfix(std::string infix) {
                 break;
         }
     }
+    if (!stack.isEmpty())
+        result += ' ';
     while (!stack.isEmpty()) {
         result += stack.pop();
         result += ' ';
